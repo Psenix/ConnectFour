@@ -1,1 +1,17 @@
 /* You can add global styles to this file, and also import other style files */
+h1 {
+    color: aliceblue;
+    font-size: 50px;
+    margin-left: 5px;
+}
+
+h4 {
+    color: aliceblue;
+    font-size: 24px;
+    margin-top: -20px;
+    margin-left: 10px;
+}
+
+body {
+  background-color: #1e1e1e;
+}
