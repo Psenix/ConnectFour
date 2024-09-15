@@ -46,7 +46,8 @@ export class AppComponent {
         case 'KeyD':
           if (this.position < 6) {
             this.position++;
-            this.ctx.clearRect(this.initialPosition - this.lineThickness, this.lineThickness, this.tileWidth + this.lineThickness * 2, this.tileHeigth);
+            this.ctx.clearRect(this.initialPosition - this.lineThickness, this.lineThickness, this.tileWidth + this.lineThickness * 2, this.tileHeigth + this.lineThickness);
+            this.drawBoard();
             this.ctx.fillRect(this.initialPosition + this.horzSpace, this.lineThickness, this.tileWidth, this.tileHeigth);
             this.initialPosition += this.horzSpace;
           }
@@ -54,7 +55,8 @@ export class AppComponent {
         case 'KeyA':
           if (this.position > 0) {
             this.position--;
-            this.ctx.clearRect(this.initialPosition - this.lineThickness, this.lineThickness, this.tileWidth + this.lineThickness * 2, this.tileHeigth);
+            this.ctx.clearRect(this.initialPosition - this.lineThickness, this.lineThickness, this.tileWidth + this.lineThickness * 2, this.tileHeigth + this.lineThickness);
+            this.drawBoard();
             this.ctx.fillRect(this.initialPosition - this.horzSpace, this.lineThickness, this.tileWidth, this.tileHeigth);
             this.initialPosition -= this.horzSpace;
           }
@@ -104,6 +106,12 @@ export class AppComponent {
 
     for (let i = 0; i < this.horzLine; i++) {
       this.ctx.fillRect(20, this.dimensions.y / this.horzLine * (i + 1) + this.tileHeigth, this.dimensions.x - this.dimensions.x / this.vertLine + this.lineThickness, this.lineThickness);
+    }
+
+    if (this.isRed) {
+      this.ctx.fillStyle = "red";
+    } else {
+      this.ctx.fillStyle = "yellow";
     }
 
   }
