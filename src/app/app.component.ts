@@ -46,7 +46,7 @@ export class AppComponent {
         case 'KeyD':
           if (this.position < 6) {
             this.position++;
-            this.ctx.clearRect(this.initialPosition - this.lineThickness, this.lineThickness, this.tileWidth + this.lineThickness * 2, this.tileHeigth + this.lineThickness);
+            this.ctx.clearRect(this.initialPosition - this.lineThickness, this.lineThickness, this.tileWidth + this.lineThickness * 2, this.tileHeigth * 2);
             this.drawBoard();
             this.ctx.fillRect(this.initialPosition + this.horzSpace, this.lineThickness, this.tileWidth, this.tileHeigth);
             this.initialPosition += this.horzSpace;
@@ -55,7 +55,7 @@ export class AppComponent {
         case 'KeyA':
           if (this.position > 0) {
             this.position--;
-            this.ctx.clearRect(this.initialPosition - this.lineThickness, this.lineThickness, this.tileWidth + this.lineThickness * 2, this.tileHeigth + this.lineThickness);
+            this.ctx.clearRect(this.initialPosition - this.lineThickness, this.lineThickness, this.tileWidth + this.lineThickness * 2, this.tileHeigth * 2);
             this.drawBoard();
             this.ctx.fillRect(this.initialPosition - this.horzSpace, this.lineThickness, this.tileWidth, this.tileHeigth);
             this.initialPosition -= this.horzSpace;
