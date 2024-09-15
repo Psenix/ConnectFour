@@ -30,9 +30,15 @@ export class AppComponent {
 
 
   ngOnInit() {
-    this.resizeCanvas();
+    this.redrawCanvas();
     window.addEventListener('resize', () => {
-      this.resizeCanvas();
+      this.redrawCanvas();
+      if (this.isRed) {
+        this.ctx.fillStyle = "red";
+      } else {
+        this.ctx.fillStyle = "yellow";
+      }
+      this.ctx.fillRect(this.initialPosition, this.lineThickness, this.tileWidth, this.tileHeigth);
     });
     this.ctx.fillStyle = "yellow";
     this.ctx.fillRect(this.initialPosition, this.lineThickness, this.tileWidth, this.tileHeigth);
@@ -48,7 +54,7 @@ export class AppComponent {
             this.position++;
             //this.ctx.clearRect(this.initialPosition - this.lineThickness, this.lineThickness, this.tileWidth + this.lineThickness * 2, this.tileHeigth * 2);
             this.ctx.clearRect(0, 0, this.dimensions.x, this.dimensions.y);
-            this.drawBoard();
+            this.redrawCanvas();
             this.ctx.fillRect(this.initialPosition + this.horzSpace, this.lineThickness, this.tileWidth, this.tileHeigth);
             this.initialPosition += this.horzSpace;
           }
@@ -58,7 +64,7 @@ export class AppComponent {
             this.position--;
             //this.ctx.clearRect(this.initialPosition - this.lineThickness, this.lineThickness, this.tileWidth + this.lineThickness * 2, this.tileHeigth * 2);
             this.ctx.clearRect(0, 0, this.dimensions.x, this.dimensions.y);
-            this.drawBoard();
+            this.redrawCanvas();
             this.ctx.fillRect(this.initialPosition - this.horzSpace, this.lineThickness, this.tileWidth, this.tileHeigth);
             this.initialPosition -= this.horzSpace;
           }
@@ -71,7 +77,7 @@ export class AppComponent {
       }
     });
   }
-  private resizeCanvas() {
+  private redrawCanvas() {
     this.canvas = document.getElementById("gameCanvas") as HTMLCanvasElement;
     this.ctx = this.canvas.getContext("2d")!;
     this.canvas.width = this.dimensions.x;
@@ -90,12 +96,6 @@ export class AppComponent {
       }
     }
 
-    if (this.isRed) {
-      this.ctx.fillStyle = "red";
-    } else {
-      this.ctx.fillStyle = "yellow";
-    }
-    this.ctx.fillRect(this.initialPosition, this.lineThickness, this.tileWidth, this.tileHeigth);
     this.drawBoard();
   }
 
@@ -207,7 +207,7 @@ export class AppComponent {
               break;
             }
           }
-        } else if (i < 0 && horzIndx + i >= 0 && horzIndx + i < rowTiles.length && rowTiles[horzIndx + i].isRed != color && connected > 0) {
+        } else if (/**i < 0 && **/ horzIndx + i >= 0 && horzIndx + i < rowTiles.length && rowTiles[horzIndx + i].isRed != color/** && connected > 0**/) {
           connected = 0;
         }
       }
