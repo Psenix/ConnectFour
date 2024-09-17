@@ -77,6 +77,53 @@ export class AppComponent {
       }
     });
   }
+
+  private checkForSwipe() {
+    let startX: number;
+    let endX: number;
+
+    this.canvas.addEventListener('touchstart', (e: TouchEvent) => {
+      startX = e.touches[0].clientX;
+    });
+
+    this.canvas.addEventListener('touchend', (e: TouchEvent) => {
+      endX = e.changedTouches[0].clientX;
+      this.calculateSwipeDirection(startX, endX);
+    });
+  }
+
+  private calculateSwipeDirection(startX: number, endX: number) {
+    const deltaX: number = endX - startX;
+    
+    if (deltaX > 0) {
+      this.moveTileByTouch(1);
+    }
+    else if (deltaX < 0) {
+      this.moveTileByTouch(-1);
+    } else {
+      this.moveTileByTouch(0);
+    }
+  }
+
+  private moveTileByTouch(direction: number) {
+    if (this.isRed) {
+      this.ctx.fillStyle = "red";
+    } else {
+      this.ctx.fillStyle = "yellow";
+    }
+
+    if (direction != 0) {
+      this.ctx.clearRect(0, 0, this.dimensions.x, this.dimensions.y);
+      this.redrawCanvas();
+      this.ctx.fillRect(this.initialPosition + this.horzSpace * direction, this.lineThickness, this.tileWidth, this.tileHeigth);
+      this.initialPosition += this.horzSpace * direction;
+    } else {
+      this.moveDown(this.tileId);
+      this.tileId++;
+      this.ctx.fillRect(this.initialPosition, this.lineThickness, this.tileWidth, this.tileHeigth);
+    }
+  }
+
   private redrawCanvas() {
     this.canvas = document.getElementById("gameCanvas") as HTMLCanvasElement;
     this.ctx = this.canvas.getContext("2d")!;
