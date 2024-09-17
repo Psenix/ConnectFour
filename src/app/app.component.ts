@@ -27,6 +27,8 @@ export class AppComponent {
   tileId: number = 0;
   tilePositions: Array<Tile> = [];
   position: number = 0;
+  startX: number = 0;
+  endX: number = 0;
 
 
   ngOnInit() {
@@ -42,6 +44,9 @@ export class AppComponent {
     });
     this.ctx.fillStyle = "yellow";
     this.ctx.fillRect(this.initialPosition, this.lineThickness, this.tileWidth, this.tileHeigth);
+
+    this.checkForSwipe();
+
     window.addEventListener('keypress', e => {
       if (this.isRed) {
         this.ctx.fillStyle = "red";
@@ -79,16 +84,13 @@ export class AppComponent {
   }
 
   private checkForSwipe() {
-    let startX: number;
-    let endX: number;
-
     this.canvas.addEventListener('touchstart', (e: TouchEvent) => {
-      startX = e.touches[0].clientX;
+      this.startX = e.touches[0].clientX;
     });
 
     this.canvas.addEventListener('touchend', (e: TouchEvent) => {
-      endX = e.changedTouches[0].clientX;
-      this.calculateSwipeDirection(startX, endX);
+      this.endX = e.changedTouches[0].clientX;
+      this.calculateSwipeDirection(this.startX, this.endX);
     });
   }
 
