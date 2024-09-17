@@ -134,7 +134,7 @@ export class AppComponent {
       this.ctx.fillStyle = "yellow";
     }
 
-    for (let i = 1; i < 7; i++) {
+    for (let i = 1; i < this.horzLine; i++) {
       if (maxY != height + this.lineThickness + this.vertSpace) {
         this.ctx.clearRect(this.initialPosition - this.lineThickness, height, this.tileWidth + this.lineThickness * 2, this.tileHeigth + this.lineThickness * 2);
         this.ctx.fillRect(this.initialPosition, height + this.vertSpace, this.tileWidth, this.tileHeigth);
@@ -179,98 +179,118 @@ export class AppComponent {
     let connected: number = 0;
     //Horizontal ceck
     //Don't judge I'll fix it sometime soon
-    for (let i = -3; i <= checkTiles; i++) {
+    //for (let i = -3; i <= checkTiles; i++) {
+    //  if (i != 0) {
+    //    if (horzIndx + i >= 0 && horzIndx + i < rowTiles.length && rowTiles[horzIndx + i].isRed == color) {
+    //      if (i > -3 && horzIndx + i > 0) {
+    //        if (Math.round(rowTiles[horzIndx + i].x - rowTiles[horzIndx + i - 1].x).toFixed(3) == Math.round(this.horzSpace).toFixed(3)) {
+    //          if (i == -1 && Math.round(rowTiles[horzIndx].x - rowTiles[horzIndx + i].x).toFixed(3) == Math.round(this.horzSpace).toFixed(3)) {
+    //            connected++;
+    //            if (connected == 3) {
+    //              this.handleEnd(color, false);
+    //              break;
+    //            }
+    //          } else if (i != -1) {
+    //            connected++;
+    //            if (connected == 3) {
+    //              this.handleEnd(color, false);
+    //              break;
+    //            }
+    //          } else {
+    //            connected = 0;
+    //          }
+    //        } else {
+    //          connected = 0;
+    //        }
+    //      } else {
+    //        connected++;
+    //        if (connected == 3) {
+    //          this.handleEnd(color, false);
+    //          break;
+    //        }
+    //      }
+    //    } else if (/**i < 0 && **/ horzIndx + i >= 0 && horzIndx + i < rowTiles.length && rowTiles[horzIndx + i].isRed != color/** && connected > 0**/) {
+    //      connected = 0;
+    //    }
+    //  }
+    //}
+
+    //That for loop those everything the commented ocde did before finally did it a bit better
+    for (let i = -3; i <= 3; i++) {
       if (i != 0) {
-        if (horzIndx + i >= 0 && horzIndx + i < rowTiles.length && rowTiles[horzIndx + i].isRed == color) {
-          if (i > -3 && horzIndx + i > 0) {
-            if (Math.round(rowTiles[horzIndx + i].x - rowTiles[horzIndx + i - 1].x).toFixed(3) == Math.round(this.horzSpace).toFixed(3)) {
-              if (i == -1 && Math.round(rowTiles[horzIndx].x - rowTiles[horzIndx + i].x).toFixed(3) == Math.round(this.horzSpace).toFixed(3)) {
-                connected++;
-                if (connected == 3) {
-                  this.handleEnd(color, false);
-                  break;
-                }
-              } else if (i != -1) {
-                connected++;
-                if (connected == 3) {
-                  this.handleEnd(color, false);
-                  break;
-                }
-              } else {
-                connected = 0;
+        const Indx = this.tilePositions.findIndex((obj) => Math.round(obj.x).toFixed(3) == Math.round(row + this.horzSpace * i).toFixed(3) && obj.y == column);
+        if (Indx != -1) {
+          if (this.tilePositions[Indx].isRed == color) {
+            connected++;
+            if (connected == 3) {
+              this.handleEnd(color, false);
+              break;
+            }
+          } else {
+            connected = 0;
+          }
+        } else {
+          connected = 0;
+        }
+      }
+    }
+
+      //Vertical Check
+      connected = 0;
+      for (let i = 1; i <= checkTiles; i++) {
+        if (vertIndx - i < columnColors.length && columnColors[vertIndx - i] == color) {
+          connected++;
+          if (connected == 3) {
+            this.handleEnd(color, false);
+            break;
+          }
+        }
+      }
+
+      //Diagonal Check
+      //go with x/y cords instead of sorted list or else
+      connected = 0;
+      for (let i = -3; i <= 3; i++) {
+        if (i != 0) {
+          const Indx = this.tilePositions.findIndex((obj) => Math.round(obj.x).toFixed(3) == Math.round(row + this.horzSpace * i).toFixed(3) && Math.round(obj.y).toFixed(3) == Math.round(column + this.vertSpace * i).toFixed(3));
+          if (Indx != -1) {
+            if (this.tilePositions[Indx].isRed == color) {
+              connected++;
+              if (connected == 3) {
+                this.handleEnd(color, false);
+                break;
               }
             } else {
               connected = 0;
             }
           } else {
-            connected++;
-            if (connected == 3) {
-              this.handleEnd(color, false);
-              break;
-            }
+            connected = 0;
           }
-        } else if (/**i < 0 && **/ horzIndx + i >= 0 && horzIndx + i < rowTiles.length && rowTiles[horzIndx + i].isRed != color/** && connected > 0**/) {
-          connected = 0;
         }
       }
-    }
 
-    //Vertical Check
-    connected = 0;
-    for (let i = 1; i <= checkTiles; i++) {
-      if (vertIndx - i < columnColors.length && columnColors[vertIndx - i] == color) {
-        connected++;
-        if (connected == 3) {
-          this.handleEnd(color, false);
-          break;
-        }
-      }
-    }
-
-    //Diagonal Check
-    //go with x/y cords instead of sorted list or else
-    connected = 0;
-    for (let i = -3; i <= 3; i++) {
-      if (i != 0) {
-        const Indx = this.tilePositions.findIndex((obj) => Math.round(obj.x).toFixed(3) == Math.round(row + this.horzSpace * i).toFixed(3) && Math.round(row - this.horzSpace * i).toFixed(3) == Math.round(column + this.vertSpace * i).toFixed(3));
-        if (Indx != -1) {
-          if (this.tilePositions[Indx].isRed == color) {
-            connected++;
-            if (connected == 3) {
-              this.handleEnd(color, false);
-              break;
+      for (let i = -3; i <= 3; i++) {
+        if (i != 0) {
+          const Indx = this.tilePositions.findIndex((obj) => Math.round(obj.x).toFixed(3) == Math.round(row - this.horzSpace * i).toFixed(3) && Math.round(obj.y).toFixed(3) == Math.round(column + this.vertSpace * i).toFixed(3));
+          if (Indx != -1) {
+            if (this.tilePositions[Indx].isRed == color) {
+              connected++;
+              if (connected == 3) {
+                this.handleEnd(color, false);
+                break;
+              }
+            } else {
+              connected = 0;
             }
           } else {
             connected = 0;
           }
-        } else {
-          connected = 0;
         }
       }
-    }
 
-    for (let i = -3; i <= 3; i++) {
-      if (i != 0) {
-        const Indx = this.tilePositions.findIndex((obj) => Math.round(obj.x).toFixed(3) == Math.round(row - this.horzSpace * i).toFixed(3) && Math.round(obj.y).toFixed(3) == Math.round(column + this.vertSpace * i).toFixed(3));
-        if (Indx != -1) {
-          if (this.tilePositions[Indx].isRed == color) {
-            connected++;
-            if (connected == 3) {
-              this.handleEnd(color, false);
-              break;
-            }
-          } else {
-            connected = 0;
-          }
-        } else {
-          connected = 0;
-        }
+      if (this.tilePositions.length == 42) {
+        this.handleEnd(color, true);
       }
-    }
-
-    if (this.tilePositions.length == 42) {
-      this.handleEnd(color, true);
-    }
   }
 
   private handleEnd(isRed: boolean, isTie: boolean) {
