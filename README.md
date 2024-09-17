@@ -8,11 +8,11 @@ PC and mobie compatibility
 # Controlls
 PC:
 
-A -> move left     D -> move right     Enter -> place the tile
+A -> move left  |  D -> move right  |  Enter -> place the tile
 
 Mobile:
 
-Swipe  left -> move left     Swipe right -> move right     Tap Screen -> place Tile
+Swipe  left -> move left  |  Swipe right -> move right  |  Tap Screen -> place Tile
 
 # Future Features
 Play with others online
