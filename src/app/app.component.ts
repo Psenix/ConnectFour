@@ -183,8 +183,8 @@ export class AppComponent {
       if (i != 0) {
         if (horzIndx + i >= 0 && horzIndx + i < rowTiles.length && rowTiles[horzIndx + i].isRed == color) {
           if (i > -3 && horzIndx + i > 0) {
-            if (rowTiles[horzIndx + i].x - rowTiles[horzIndx + i - 1].x == this.horzSpace) {
-              if (i == -1 && rowTiles[horzIndx].x - rowTiles[horzIndx + i].x == this.horzSpace) {
+            if (Math.round(rowTiles[horzIndx + i].x - rowTiles[horzIndx + i - 1].x).toFixed(3) == Math.round(this.horzSpace).toFixed(3)) {
+              if (i == -1 && Math.round(rowTiles[horzIndx].x - rowTiles[horzIndx + i].x).toFixed(3) == Math.round(this.horzSpace).toFixed(3)) {
                 connected++;
                 if (connected == 3) {
                   this.handleEnd(color, false);
@@ -196,6 +196,8 @@ export class AppComponent {
                   this.handleEnd(color, false);
                   break;
                 }
+              } else {
+                connected = 0;
               }
             } else {
               connected = 0;
@@ -230,7 +232,7 @@ export class AppComponent {
     connected = 0;
     for (let i = -3; i <= 3; i++) {
       if (i != 0) {
-        const Indx = this.tilePositions.findIndex((obj) => obj.x == row + this.horzSpace * i && obj.y == column + this.vertSpace * i);
+        const Indx = this.tilePositions.findIndex((obj) => Math.round(obj.x).toFixed(3) == Math.round(row + this.horzSpace * i).toFixed(3) && Math.round(row - this.horzSpace * i).toFixed(3) == Math.round(column + this.vertSpace * i).toFixed(3));
         if (Indx != -1) {
           if (this.tilePositions[Indx].isRed == color) {
             connected++;
@@ -249,7 +251,7 @@ export class AppComponent {
 
     for (let i = -3; i <= 3; i++) {
       if (i != 0) {
-        const Indx = this.tilePositions.findIndex((obj) => obj.x == row - this.horzSpace * i && obj.y == column + this.vertSpace * i);
+        const Indx = this.tilePositions.findIndex((obj) => Math.round(obj.x).toFixed(3) == Math.round(row - this.horzSpace * i).toFixed(3) && Math.round(obj.y).toFixed(3) == Math.round(column + this.vertSpace * i).toFixed(3));
         if (Indx != -1) {
           if (this.tilePositions[Indx].isRed == color) {
             connected++;
