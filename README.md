@@ -16,5 +16,6 @@ Swipe  left -> move left   Swipe right -> move right   Tap Screen -> place Tile
 
 # Future Features
 Play with others online
+
 More options for pc users to controll the tile (mouse)
 
