@@ -98,10 +98,16 @@ export class AppComponent {
     const deltaX: number = endX - startX;
     
     if (deltaX > 0) {
-      this.moveTileByTouch(1);
+      if (this.position < 6) {
+        this.position++;
+        this.moveTileByTouch(1);
+      }
     }
     else if (deltaX < 0) {
-      this.moveTileByTouch(-1);
+      if (this.position > 0) {
+        this.position--;
+        this.moveTileByTouch(-1);
+      }
     } else {
       this.moveTileByTouch(0);
     }
