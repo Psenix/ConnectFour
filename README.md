@@ -3,9 +3,9 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 Simple Connect Four website, where two players can play locally against each other.
 
-PC and mobie compatibility
+PC and mobile compatibility
 
-# Controlls
+# Controls
 PC:
 
 A -> move left  |  D -> move right  |  Enter -> place the tile
